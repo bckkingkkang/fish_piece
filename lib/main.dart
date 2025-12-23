@@ -1,3 +1,4 @@
+import 'package:fish_piece/screen/more_screen.dart';
 import 'package:fish_piece/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 //import 'package:firebase_core/firebase_core.dart';
@@ -32,7 +33,7 @@ class _MyAppState extends State<MyApp> {
               Container(),
               Container(),
               Container(),
-              Container(),
+              MoreScreen(),
               Container(),
             ] ,
           ),
