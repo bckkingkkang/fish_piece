@@ -22,6 +22,7 @@ class _MyAppState extends State<MyApp> {
   late TabController tabController;
   String currentLocation = '위치 불러오는 중...';
   String weatherInfo = '날씨 불러오는 중...';
+  String weatherDescription = '';
   double temperature = 0.0;
 
   @override
@@ -98,6 +99,7 @@ class _MyAppState extends State<MyApp> {
         String description = _getWeatherDescription(current['weather_code']);
         setState(() {
           temperature = (current['temperature_2m'] as num).toDouble();
+          weatherDescription = description;
           weatherInfo = '$description ${temperature.toStringAsFixed(1)}°C';
         });
       }
@@ -117,6 +119,24 @@ class _MyAppState extends State<MyApp> {
     if (code >= 85 && code <= 86) return '눈소나기';
     if (code >= 95 && code <= 99) return '천둥번개';
     return '날씨 정보';
+  }
+
+  Widget _getWeatherIcon() {
+    final desc = weatherDescription;
+    if (desc.contains('맑음')) {
+      return Icon(Icons.wb_sunny, color: Colors.amber, size: 20);
+    } else if (desc.contains('흐림')) {
+      return Icon(Icons.wb_cloudy, color: Colors.grey, size: 20);
+    } else if (desc.contains('이슬비') || desc.contains('소나기')) {
+      return Icon(Icons.grain, color: Colors.blue, size: 20);
+    } else if (desc.contains('눈')) {
+      return Icon(Icons.cloud, color: Colors.blue, size: 20);
+    } else if (desc.contains('안개')) {
+      return Icon(Icons.cloud, color: Colors.grey, size: 20);
+    } else if (desc.contains('천둥')) {
+      return Icon(Icons.flash_on, color: Colors.orange, size: 20);
+    }
+    return Icon(Icons.wb_sunny, color: Colors.amber, size: 20);
   }
 
   @override
@@ -141,10 +161,27 @@ class _MyAppState extends State<MyApp> {
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 child: Row(
                   children: [
-                    _getWeatherIcon(),
+                    Text(
+                      currentLocation,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Color(0xFF0B3D91),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                     SizedBox(width: 8),
                     Text(
-                      '$currentLocation $weatherInfo',
+                      weatherDescription.isNotEmpty ? weatherDescription : '-',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Color(0xFF0B3D91),
+                      ),
+                    ),
+                    SizedBox(width: 6),
+                    _getWeatherIcon(),
+                    SizedBox(width: 6),
+                    Text(
+                      temperature != 0.0 ? '${temperature.toStringAsFixed(1)}°C' : '-',
                       style: TextStyle(
                         fontSize: 13,
                         color: Color(0xFF0B3D91),
