@@ -128,6 +128,8 @@ class _MyAppState extends State<MyApp> {
         child: Column(
           children: [
             _buildAiTidePreviewWidget(),
+            SizedBox(height: 20),
+            _buildWeeklyCommunityWidget(),
           ],
         ),
       ),
@@ -135,17 +137,29 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _buildAiTidePreviewWidget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 0, bottom: 12),
-          child: Text(
-            'AI 기반 물때 보기',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF0B3D91),
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Color(0xFF0B3D91),
+          width: 2,
+        ),
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+      ),
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 0, bottom: 12),
+            child: Text(
+              '내가 즐겨찾는 장소 물때',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF0B3D91),
+              ),
             ),
           ),
         ),
@@ -178,7 +192,7 @@ class _MyAppState extends State<MyApp> {
         DefaultTabController.of(context)?.animateTo(3);
       },
       child: Container(
-        width: MediaQuery.of(context).size.width - 60,
+        width: 160,
         decoration: BoxDecoration(
           border: Border.all(
             color: Color(0xFF0B3D91),
@@ -194,7 +208,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -204,13 +218,13 @@ class _MyAppState extends State<MyApp> {
                 Icon(
                   Icons.location_on,
                   color: Color(0xFF0B3D91),
-                  size: 24,
+                  size: 18,
                 ),
-                SizedBox(width: 12),
+                SizedBox(width: 8),
                 Text(
                   locations[index],
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 13,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF0B3D91),
                   ),
@@ -239,13 +253,13 @@ class _MyAppState extends State<MyApp> {
                 Icon(
                   Icons.schedule,
                   color: Colors.grey[600],
-                  size: 18,
+                  size: 14,
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: 6),
                 Text(
                   times[index],
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF0B3D91),
                   ),
