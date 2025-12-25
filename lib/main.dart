@@ -121,6 +121,181 @@ class _MyAppState extends State<MyApp> {
     return '날씨 정보';
   }
 
+  Widget _buildHomeScreen() {
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            _buildAiTidePreviewWidget(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAiTidePreviewWidget() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 0, bottom: 12),
+          child: Text(
+            'AI 기반 물때 보기',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF0B3D91),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 200,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(4, (index) {
+                return Padding(
+                  padding: EdgeInsets.only(right: 16, left: index == 0 ? 0 : 0),
+                  child: _buildTideCard(index),
+                );
+              }),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTideCard(int index) {
+    final List<String> locations = ['낚시터 1', '낚시터 2', '낚시터 3', '낚시터 4'];
+    final List<String> tideInfo = ['만조 예정', '간조 진행중', '만조 진행중', '간조 예정'];
+    final List<String> times = ['14:30', '09:15', '16:45', '11:20'];
+    final List<String> descriptions = ['최적 시간까지 2시간 40분', '현재 낚시 황금시간 진행중', '곧 간조 시작 예정', '다음 만조까지 3시간'];
+
+    return GestureDetector(
+      onTap: () {
+        DefaultTabController.of(context)?.animateTo(3);
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width - 60,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Color(0xFF0B3D91),
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.location_on,
+                  color: Color(0xFF0B3D91),
+                  size: 24,
+                ),
+                SizedBox(width: 12),
+                Text(
+                  locations[index],
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF0B3D91),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+              decoration: BoxDecoration(
+                color: Color(0xFF0B3D91).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                tideInfo[index],
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF0B3D91),
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Row(
+              children: [
+                Icon(
+                  Icons.schedule,
+                  color: Colors.grey[600],
+                  size: 18,
+                ),
+                SizedBox(width: 8),
+                Text(
+                  times[index],
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF0B3D91),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 6),
+            Text(
+              descriptions[index],
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.grey[700],
+              ),
+            ),
+            SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(width: 1),
+                GestureDetector(
+                  onTap: () {
+                    DefaultTabController.of(context)?.animateTo(3);
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        '자세히 보기',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF0B3D91),
+                        ),
+                      ),
+                      SizedBox(width: 6),
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Color(0xFF0B3D91),
+                        size: 14,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _getWeatherIcon() {
     final desc = weatherDescription;
     if (desc.contains('맑음')) {
@@ -199,7 +374,7 @@ class _MyAppState extends State<MyApp> {
           body : TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children : <Widget> [
-              Container(),
+              _buildHomeScreen(),
               Container(),
               Container(),
               MoreScreen(),
