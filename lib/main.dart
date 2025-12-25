@@ -162,22 +162,76 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 200,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(4, (index) {
-                return Padding(
-                  padding: EdgeInsets.only(right: 16, left: index == 0 ? 0 : 0),
-                  child: _buildTideCard(index),
-                );
-              }),
+          SizedBox(
+            height: 160,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(4, (index) {
+                  return Padding(
+                    padding: EdgeInsets.only(right: 12, left: index == 0 ? 0 : 0),
+                    child: _buildTideCard(index),
+                  );
+                }),
+              ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWeeklyCommunityWidget() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Color(0xFF0B3D91),
+          width: 2,
         ),
-      ],
+        borderRadius: BorderRadius.circular(12),
+        color: Colors.white,
+      ),
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 0, bottom: 12),
+            child: Text(
+              '주간 커뮤니티',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF0B3D91),
+              ),
+            ),
+          ),
+          GridView.count(
+            crossAxisCount: 4,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+            children: List.generate(8, (index) {
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.grey[100],
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.image,
+                    color: Colors.grey[400],
+                    size: 24,
+                  ),
+                ),
+              );
+            }),
+          ),
+        ],
+      ),
+    );
     );
   }
 
